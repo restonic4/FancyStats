@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "fancystats",
+  "version": "${version}",
+  "name": "FancyStats",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/fancystats/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "com.restonic4.fancystats.Fancystats"
+    ]
+  },
+  "mixins": [
+    "fancystats.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
