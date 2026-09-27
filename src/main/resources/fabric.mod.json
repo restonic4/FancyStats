@@ -13,7 +13,7 @@
     "client": [
     ],
     "main": [
-      "com.restonic4.fancystats.Fancystats"
+      "com.restonic4.fancystats.FancyStats"
     ]
   },
   "mixins": [
