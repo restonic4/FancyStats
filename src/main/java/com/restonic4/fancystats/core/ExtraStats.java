@@ -21,6 +21,7 @@ public class ExtraStats {
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
     private final Path file;
+    private final StatsKeyRegistry registry;
 
     private final NavigableMap<Long, Map<String, Long>> history = new TreeMap<>();
     private final NavigableMap<Long, Map<String, Long>> pending = new TreeMap<>();
@@ -29,6 +30,7 @@ public class ExtraStats {
 
     private ExtraStats(Path file) {
         this.file = file;
+        this.registry = StatsKeyRegistry.get(file.toAbsolutePath().normalize().getParent());
     }
 
     public static ExtraStats load(Path file) {
@@ -101,7 +103,8 @@ public class ExtraStats {
                 JsonObject values = new JsonObject();
 
                 for (Map.Entry<String, Long> value : entry.getValue().entrySet()) {
-                    values.addProperty(value.getKey(), value.getValue());
+                    String key = registry.encode(value.getKey());
+                    values.addProperty(key, value.getValue());
                 }
 
                 buckets.add(Long.toString(entry.getKey()), values);
@@ -166,7 +169,8 @@ public class ExtraStats {
                 JsonElement value = valueEntry.getValue();
                 if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) continue;
 
-                merge(history, bucket, valueEntry.getKey(), value.getAsLong());
+                String statId = registry.decode(valueEntry.getKey());
+                merge(history, bucket, statId, value.getAsLong());
             }
         }
     }
