@@ -1,8 +1,10 @@
 package com.restonic4.fancystats;
 
+import com.restonic4.fancystats.client.FancyStatsScreenAccess;
 import com.restonic4.fancystats.core.StatsReport;
 import com.restonic4.fancystats.core.StatsReportNetworking;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.Minecraft;
 
 public class FancyStatsClient implements ClientModInitializer {
     @Override
@@ -10,12 +12,9 @@ public class FancyStatsClient implements ClientModInitializer {
         StatsReportNetworking.registerClient();
     }
 
-    public static void handleReport(StatsReport report) {
-        System.out.println("========== FancyStats Report ==========");
-        System.out.println("From: " + report.fromMillis());
-        System.out.println("To: " + report.toMillis());
-        System.out.println("Stats:");
-        report.values().forEach((stat, value) -> System.out.println("  " + stat + " = " + value));
-        System.out.println("=======================================");
+    public static void handleReport(Minecraft minecraft, StatsReport report) {
+        if (minecraft.screen instanceof FancyStatsScreenAccess access) {
+            access.fancystats$receiveReport(report);
+        }
     }
 }

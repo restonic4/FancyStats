@@ -20,6 +20,7 @@
   "mixins": [
     "fancystats.mixins.json"
   ],
+  "accessWidener": "fancystats.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",

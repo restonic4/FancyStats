@@ -1,0 +1,4 @@
+accessWidener v1 named
+
+accessible method net/minecraft/client/gui/components/AbstractSelectionList clearEntries ()V
+accessible method net/minecraft/client/gui/screens/achievement/StatsScreen getTranslationKey (Lnet/minecraft/stats/Stat;)Ljava/lang/String;

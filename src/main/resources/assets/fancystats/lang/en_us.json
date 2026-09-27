@@ -1,0 +1,11 @@
+{
+  "fancystats.tab": "Fancy",
+  "fancystats.start": "Start",
+  "fancystats.end": "End",
+  "fancystats.apply": "Apply",
+  "fancystats.loading": "Loading...",
+  "fancystats.invalid_date": "Invalid date. Use yyyy-MM-dd HH:mm.",
+  "fancystats.invalid_range": "End must be after start.",
+  "fancystats.network_unavailable": "The server does not support Fancy Stats.",
+  "fancystats.stat.unknown": "Unknown Statistic"
+}

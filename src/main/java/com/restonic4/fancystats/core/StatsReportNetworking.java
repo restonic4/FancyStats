@@ -34,7 +34,7 @@ public class StatsReportNetworking {
                 REPORT,
                 (client, handler, buf, responseSender) -> {
                     StatsReport report = readReport(buf);
-                    client.execute(() -> FancyStatsClient.handleReport(report));
+                    client.execute(() -> FancyStatsClient.handleReport(client, report));
                 }
         );
     }
@@ -90,5 +90,18 @@ public class StatsReportNetworking {
         writeReport(buf, report);
 
         ServerPlayNetworking.send(player, REPORT, buf);
+    }
+
+    public static boolean canRequestReport() {
+        return ClientPlayNetworking.canSend(REQUEST_REPORT);
+    }
+
+    public static void requestReport(long fromMillis, long toMillis) {
+        FriendlyByteBuf buf = PacketByteBufs.create();
+
+        buf.writeLong(fromMillis);
+        buf.writeLong(toMillis);
+
+        ClientPlayNetworking.send(REQUEST_REPORT, buf);
     }
 }
