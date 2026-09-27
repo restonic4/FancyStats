@@ -7,5 +7,16 @@
   "fancystats.invalid_date": "Invalid date. Use yyyy-MM-dd HH:mm.",
   "fancystats.invalid_range": "End must be after start.",
   "fancystats.network_unavailable": "The server does not support Fancy Stats.",
-  "fancystats.stat.unknown": "Unknown Statistic"
+  "fancystats.stat.unknown": "Unknown Statistic",
+
+  "fancystats.category.custom": "Custom",
+  "fancystats.category.blocks_mined": "Blocks Mined",
+  "fancystats.category.items_crafted": "Items Crafted",
+  "fancystats.category.items_used": "Items Used",
+  "fancystats.category.items_broken": "Items Broken",
+  "fancystats.category.items_picked_up": "Items Picked Up",
+  "fancystats.category.items_dropped": "Items Dropped",
+  "fancystats.category.entities_killed": "Entities Killed",
+  "fancystats.category.entities_killed_by": "Killed By Entities",
+  "fancystats.category.other": "Other"
 }
