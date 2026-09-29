@@ -1,6 +1,7 @@
 plugins {
-    id 'fabric-loom' version '1.18-SNAPSHOT'
-    id 'maven-publish'
+    id 'java'
+    id 'net.fabricmc.fabric-loom-remap' version '1.17.20'
+    id 'ploceus' version '1.17.7'
 }
 
 version = project.mod_version
@@ -11,7 +12,11 @@ base {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/fancystats.accesswidener")
+    //accessWidenerPath = file("src/main/resources/fancystats.accesswidener")
+}
+
+ploceus {
+    setIntermediaryGeneration(2)
 }
 
 repositories {
@@ -20,10 +25,19 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    //modImplementation files("libs/restonic4_whimsical_lib-0.1+mc1.0.0.jar")
+
+    clientExceptions ploceus.raven(project.client_raven_build, 'client')
+    serverExceptions ploceus.raven(project.server_raven_build, 'server')
+    clientSignatures ploceus.sparrow(project.client_sparrow_build, 'client')
+    serverSignatures ploceus.sparrow(project.server_sparrow_build, 'server')
+    clientNests ploceus.nests(project.client_nests_build, 'client')
+    serverNests ploceus.nests(project.server_nests_build, 'server')
+    mappings ploceus.featherMappings(project.feather_build)
+
+    ploceus.dependOsl(project.osl_version)
 }
 
 processResources {
@@ -39,35 +53,20 @@ processResources {
     }
 }
 
-def targetJavaVersion = 17
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        it.options.release.set(targetJavaVersion)
-    }
+    it.options.encoding = 'UTF-8'
+    it.options.release = 8
 }
 
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
     withSourcesJar()
 }
 
 jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archives_base_name}" }
+    from('LICENSE.txt') {
+        rename { "${it}_${base.archivesName.get()}" }
     }
-}
-
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-
-    repositories {}
 }

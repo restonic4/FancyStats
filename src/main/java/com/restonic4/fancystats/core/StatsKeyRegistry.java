@@ -82,8 +82,8 @@ public class StatsKeyRegistry {
         if (!Files.exists(file)) return;
 
         try {
-            String content = Files.readString(file, StandardCharsets.UTF_8);
-            if (content.isBlank()) return;
+            String content = new String(Files.readAllBytes(file), StandardCharsets.UTF_8);
+            if (content.trim().isEmpty()) return;
 
             JsonObject root = JsonParser.parseString(content).getAsJsonObject();
 
@@ -129,8 +129,8 @@ public class StatsKeyRegistry {
             String json = GSON.toJson(root);
 
             Path tmp = file.resolveSibling(file.getFileName().toString() + ".tmp");
-            Files.writeString(
-                    tmp, json, StandardCharsets.UTF_8,
+            Files.write(
+                    tmp, json.getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING
             );
             Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING);

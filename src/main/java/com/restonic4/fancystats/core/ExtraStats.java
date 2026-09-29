@@ -1,7 +1,7 @@
 package com.restonic4.fancystats.core;
 
 import com.google.gson.*;
-import net.minecraft.stats.Stat;
+import net.minecraft.stat.Stat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,10 +52,10 @@ public class ExtraStats {
         return stats;
     }
 
-    public void record(Stat<?> stat, long amount, long timestampMillis) {
+    public void record(Stat stat, long amount, long timestampMillis) {
         if (amount == 0L) return;
 
-        String statId = stat.getName();
+        String statId = stat.key;
         record(statId, amount, timestampMillis);
     }
 
@@ -83,8 +83,8 @@ public class ExtraStats {
         return result;
     }
 
-    public long sum(Stat<?> stat, long fromMillis, long toMillis) {
-        return sum(stat.getName(), fromMillis, toMillis);
+    public long sum(Stat stat, long fromMillis, long toMillis) {
+        return sum(stat.key, fromMillis, toMillis);
     }
 
     public void save() {
@@ -114,10 +114,9 @@ public class ExtraStats {
 
             String line = GSON.toJson(root) + System.lineSeparator();
 
-            Files.writeString(
+            Files.write(
                     file,
-                    line,
-                    StandardCharsets.UTF_8,
+                    line.getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE,
                     StandardOpenOption.WRITE,
                     StandardOpenOption.APPEND

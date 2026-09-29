@@ -45,7 +45,8 @@ public class StatsReportNetworking {
         long maxRange = 1000L * 60L * 60L * 24L * 365L * 10L;
         if (toMillis - fromMillis > maxRange) return;
 
-        if (!(player.getStats() instanceof ExtraStatsAccess access)) return;
+        if (!(player.getStats() instanceof ExtraStatsAccess)) return;
+        ExtraStatsAccess access = (ExtraStatsAccess) player.getStats();
 
         StatsReport report = access.fancystats$extraStats().createReport(fromMillis, toMillis);
         sendReport(player, report);

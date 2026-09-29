@@ -14,7 +14,8 @@ public class StatsCounterMixin {
     @Inject(method = "increment", at = @At("TAIL"))
     private void fancystats$onIncrement(Player player, Stat<?> stat, int amount, CallbackInfo ci) {
         if (amount == 0) return;
-        if (!((Object) this instanceof ExtraStatsAccess access)) return;
+        if (!((Object) this instanceof ExtraStatsAccess)) return;
+        ExtraStatsAccess access = (ExtraStatsAccess) this;
         access.fancystats$extraStats().record(stat, amount, System.currentTimeMillis());
     }
 }

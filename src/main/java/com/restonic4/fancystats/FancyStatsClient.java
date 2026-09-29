@@ -13,7 +13,8 @@ public class FancyStatsClient implements ClientModInitializer {
     }
 
     public static void handleReport(Minecraft minecraft, StatsReport report) {
-        if (minecraft.screen instanceof FancyStatsScreenAccess access) {
+        if (minecraft.screen instanceof FancyStatsScreenAccess) {
+            FancyStatsScreenAccess access = (FancyStatsScreenAccess) minecraft.screen;
             access.fancystats$receiveReport(report);
         }
     }
